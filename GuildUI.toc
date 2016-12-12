@@ -1,0 +1,4 @@
+## Interface: 70000
+## Title: GuildUI
+## Author: Taunkah & Eodred
+## Version: 0.1
