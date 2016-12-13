@@ -2,3 +2,6 @@
 ## Title: GuildUI
 ## Author: Taunkah & Eodred
 ## Version: 0.1
+
+GuildUI.lua
+Events.lua
