@@ -23,9 +23,9 @@ local eventHandlers = {
 
 -- create dummy frame for wiring up events
 local frame = CreateFrame("Frame")
-for key,block in pairs(eventHandlers) do frame:RegisterEvent(key) end
 
 -- associate event handlers to desired events
+for key,block in pairs(eventHandlers) do frame:RegisterEvent(key) end
 frame:SetScript('OnEvent', 
     function(self, event, ...)
         for key,block in pairs(eventHandlers) do
