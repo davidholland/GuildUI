@@ -15,7 +15,7 @@ local function SystemMessageReceieved(...) {
     Print("System chat message was received.")
 }
 
--- associate event handler functions with the correct api event
+-- define event->handler mapping
 local eventHandlers = {
     GUILD_ROSTER_UPDATE = GuildRosterUpdated,
     CHAT_MSG_SYSTEN = SystemMessageReceieved
