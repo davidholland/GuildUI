@@ -5,12 +5,13 @@ local function GuildRosterUpdated(...) {
     local wasUpdated = ...
     Print("Guild roster was updated.")
 
-    -- for index in GetNumGuildMembers() do
+    -- local totalCount, onlineCount, mobileCount = GetNumGuildMembers()
+    -- for index in totalCount do
     --     local fullName, rank, rankIndex, level, class, zone, note, officernote, online, status, classFileName, achievementPoints, achievementRank, isMobile, canSoR, reputation = GetGuildRosterInfo(index)
     -- end
 }
 
-local function SystemMessageReceieved(...) {
+local function SystemMessageReceived(...) {
     local message, sender, language, channelString, target, flags, unknown, channelNumber, channelName, unknown, counter = ...
     Print("System chat message was received.")
 }
@@ -18,7 +19,7 @@ local function SystemMessageReceieved(...) {
 -- define event->handler mapping
 local eventHandlers = {
     GUILD_ROSTER_UPDATE = GuildRosterUpdated,
-    CHAT_MSG_SYSTEN = SystemMessageReceieved
+    CHAT_MSG_SYSTEN = SystemMessageReceived
 }
 
 -- create dummy frame for wiring up events
