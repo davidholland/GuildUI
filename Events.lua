@@ -1,20 +1,42 @@
 -- Home for event handlers
 local _, GuildUI=...
 
-local function GuildRosterUpdated(...) {
+local function GuildRosterUpdated(...)
     local wasUpdated = ...
     print("Guild roster was updated.")
 
-    -- local totalCount, onlineCount, mobileCount = GetNumGuildMembers()
-    -- for index in totalCount do
-    --     local fullName, rank, rankIndex, level, class, zone, note, officernote, online, status, classFileName, achievementPoints, achievementRank, isMobile, canSoR, reputation = GetGuildRosterInfo(index)
-    -- end
-}
+    if not GuildUI.Players then
+        GuildUI.Players = {}
+    end
 
-local function SystemMessageReceived(...) {
+    GuildUI.PlayerCount, GuildUI.OnlineCount, GuildUI.MobileCount = GetNumGuildMembers()
+    for index=0,GuildUI.PlayerCount do
+        local fullName, rank, rankIndex, level, class, zone, note, officerNote, isOnline, status, classFileName, achievementPoints, achievementRank, isMobile, canSoR, reputation = GetGuildRosterInfo(index)
+        local player = {
+            Name = fullName, --TODO: Regex parse the first part
+            FullName = fullName,
+            Rank = Rank,
+            RankIndex = rankIndex,
+            Level = level,
+            Class = class,
+            Note = note,
+            OfficerNote = officerNote,
+            IsOnline = isOnline,
+            Status = status,
+            ClassFileName = ClassFileName,
+            AchievementPoints = achievementPoints,
+            AchievementRank = achievementRank,
+            IsMobile = isMobile,
+            Reputation = reputation
+        }
+        table.insert(GuildUI.Players, player)
+    end
+end
+
+local function SystemMessageReceived(...)
     local message, sender, language, channelString, target, flags, unknown, channelNumber, channelName, unknown, counter = ...
     print("System chat message was received.")
-}
+end
 
 -- define event->handler mapping
 local eventHandlers = {
