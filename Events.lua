@@ -19,6 +19,7 @@ local function GuildRosterUpdated(...)
             RankIndex = rankIndex,
             Level = level,
             Class = class,
+            Zone = zone,
             Note = note,
             OfficerNote = officerNote,
             IsOnline = isOnline,
