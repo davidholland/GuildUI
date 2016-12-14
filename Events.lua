@@ -3,7 +3,7 @@ local _, GuildUI=...
 
 local function GuildRosterUpdated(...) {
     local wasUpdated = ...
-    Print("Guild roster was updated.")
+    print("Guild roster was updated.")
 
     -- local totalCount, onlineCount, mobileCount = GetNumGuildMembers()
     -- for index in totalCount do
@@ -13,7 +13,7 @@ local function GuildRosterUpdated(...) {
 
 local function SystemMessageReceived(...) {
     local message, sender, language, channelString, target, flags, unknown, channelNumber, channelName, unknown, counter = ...
-    Print("System chat message was received.")
+    print("System chat message was received.")
 }
 
 -- define event->handler mapping
