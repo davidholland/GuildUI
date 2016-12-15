@@ -1,13 +1,14 @@
 -- Home for event handlers
 local _, GuildUI=...
 
+local function OnLoad(...)
+    GuildUI.Log("Player loaded.")
+    GuildUI.GuildName, GuildUI.GuildRankName, GuildUI.GuildRankIndex = GetGuildInfo("player")
+end
+
 local function GuildRosterUpdated(...)
     local wasUpdated = ...
-    print("Guild roster was updated.")
-
-    if not GuildUI.Players then
-        GuildUI.Players = {}
-    end
+    GuildUI.Log("Guild roster was updated.")
 
     GuildUI.PlayerCount, GuildUI.OnlineCount, GuildUI.MobileCount = GetNumGuildMembers()
     for index=0,GuildUI.PlayerCount do
@@ -36,13 +37,14 @@ end
 
 local function SystemMessageReceived(...)
     local message, sender, language, channelString, target, flags, unknown, channelNumber, channelName, unknown, counter = ...
-    print("System chat message was received.")
+    GuildUI.Log("System chat message was received.")
 end
 
 -- define event->handler mapping
 local eventHandlers = {
     GUILD_ROSTER_UPDATE = GuildRosterUpdated,
-    CHAT_MSG_SYSTEN = SystemMessageReceived
+    CHAT_MSG_SYSTEN = SystemMessageReceived,
+    PLAYER_ENTERING_WORLD = onLoad
 }
 
 -- create dummy frame for wiring up events
@@ -68,10 +70,10 @@ frame:SetScript('OnEvent',
 --     totalElapsed = totalElapsed + elapsed
 --     if totalElapsed >= updateInterval then
 --         totalElapsed = 0
---         print("Process code on interval ", updateInterval)
+--         GuildUI.Log("Process code on interval ", updateInterval)
 --     end
 -- end
 
 -- frame:SetScript("OnUpdate", OnUpdate)
 
-print("Events loaded.")
+GuildUI.Log("Events loaded.")

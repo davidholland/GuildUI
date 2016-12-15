@@ -3,5 +3,7 @@
 ## Author: Taunkah & Eodred
 ## Version: 0.1
 
+Logging.lua
+Definitions.lua
 GuildUI.lua
 Events.lua
