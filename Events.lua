@@ -11,10 +11,12 @@ local function GuildRosterUpdated(...)
     GuildUI.Log("Guild roster was updated.")
 
     GuildUI.PlayerCount, GuildUI.OnlineCount, GuildUI.MobileCount = GetNumGuildMembers()
-    for index=0,GuildUI.PlayerCount do
-        local fullName, rank, rankIndex, level, class, zone, note, officerNote, isOnline, status, classFileName, achievementPoints, achievementRank, isMobile, canSoR, reputation = GetGuildRosterInfo(index)
+    for index=1,GuildUI.PlayerCount do
+        local fullName, rank, rankIndex, level, class, zone, note, officerNote, isOnline, status, classFileName, achievementPoints, achievementRank, isMobile, canSoR, reputation = GetGuildRosterInfo(index)        
+        local name, server = string.match(fullName, "(%a)%-(%a)")
         local player = {
-            Name = fullName, --TODO: Regex parse the first part
+            Name = name,
+            Server = server,
             FullName = fullName,
             Rank = Rank,
             RankIndex = rankIndex,
@@ -31,7 +33,7 @@ local function GuildRosterUpdated(...)
             IsMobile = isMobile,
             Reputation = reputation
         }
-        table.insert(GuildUI.Players, player)
+        GuildUI.Players[player.FullName] = player
     end
 end
 
