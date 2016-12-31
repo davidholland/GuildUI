@@ -1,6 +1,8 @@
 -- Global-object, enum and type definitions
-local _, GuildUI=...
+local _, GuildUI_Local=...
 
+GuildUI = {}
+GuildUI.LoggingEnabled = false
 GuildUI.GuildName = ""
 GuildUI.GuildRankName = ""
 GuildUI.GuildRankIndex = 0 

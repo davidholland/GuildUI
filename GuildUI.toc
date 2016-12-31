@@ -2,8 +2,6 @@
 ## Title: GuildUI
 ## Author: Taunkah & Eodred
 ## Version: 0.1
+## SavedVariables: GuildUI_DB
 
-Logging.lua
-Definitions.lua
-GuildUI.lua
-Events.lua
+GuildUI.xml

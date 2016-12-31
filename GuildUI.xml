@@ -1,0 +1,243 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/">
+
+    <Script file="Definitions.lua" />
+    <Script file="GuildUI.lua" />
+
+    <!--Templates-->
+
+	<Button name="GuildUI_ColumnTemplate" virtual="true">
+		<Size>
+			<AbsDimension x="0" y="24"/>
+		</Size>
+        <Layers virtual="true">
+			<Layer level="BACKGROUND" virtual="true">
+				<Texture name="$parentLeft" file="Interface\FriendsFrame\WhoFrame-ColumnTabs">
+					<Size>
+						<AbsDimension x="5" y="24"/>
+					</Size>
+					<Anchors>
+						<Anchor point="TOPLEFT"/>
+					</Anchors>
+					<TexCoords left="0" right="0.078125" top="0" bottom="0.75"/>
+				</Texture>
+				<Texture name="$parentMiddle" file="Interface\FriendsFrame\WhoFrame-ColumnTabs">
+					<Size>
+						<AbsDimension x="0" y="24"/>
+					</Size>
+					<Anchors>
+						<Anchor point="LEFT" relativeTo="$parentLeft" relativePoint="RIGHT"/>
+						<Anchor point="RIGHT" relativeTo="$parent" relativePoint="RIGHT" x="-4" />
+					</Anchors>
+					<TexCoords left="0.078125" right="0.90625" top="0" bottom="0.75"/>
+				</Texture>
+				<Texture name="$parentRight" file="Interface\FriendsFrame\WhoFrame-ColumnTabs">
+					<Size>
+						<AbsDimension x="4" y="24"/>
+					</Size>
+					<Anchors>
+						<Anchor point="RIGHT" relativeTo="$parent" relativePoint="RIGHT"/>
+					</Anchors>
+					<TexCoords left="0.90625" right="0.96875" top="0" bottom="0.75"/>
+				</Texture>
+			</Layer>
+		</Layers>
+		<ButtonText justifyH="LEFT">
+			<Anchors>
+				<Anchor point="LEFT" x="8" y="0" />
+				<Anchor point="RIGHT" x="-8" y="0" />
+			</Anchors>
+		</ButtonText>
+        <NormalFont style="GameFontHighlightSmall"/>                
+		<HighlightTexture name="$parentHighlightTexture" file="Interface\PaperDollInfoFrame\UI-Character-Tab-Highlight" alphaMode="ADD">
+			<Anchors>
+				<Anchor point="TOPLEFT" relativeTo="$parentLeft">
+					<Offset>
+						<AbsDimension x="-2" y="5"/>
+					</Offset>
+				</Anchor>
+				<Anchor point="BOTTOMRIGHT" relativeTo="$parentRight">
+					<Offset>
+						<AbsDimension x="2" y="-7"/>
+					</Offset>
+				</Anchor>
+			</Anchors>
+		</HighlightTexture>
+	</Button>
+
+    <Frame name="GuildUI_MemberRow">
+        <Size>
+            <RelDimension x="1" />
+            <AbsDimension y="22" />
+        </Size>
+        <Anchors>
+            <Anchor point="TOPLEFT" relativeTo="SomeOtherFrame" virtual="true">
+                <Offset><AbsDimension x="10" y="-10"/></Offset>
+            </Anchor>
+        </Anchors>
+    </Frame>
+
+    <!--End Templates-->
+
+    <Frame name="GuildUI_Frame" toplevel="true" movable="true" resizable="true" enableMouse="true" parent="UIParent" inherits="BasicFrameTemplate">
+        <Layers>
+			<Layer level="ARTWORK">
+                <FontString name="$parent_GuildName" inherits="GameFontNormal" text="Guild Name!">
+                    <Anchors>
+                        <Anchor point="TOP" y="-5" />
+                    </Anchors>
+                </FontString>
+				<FontString name="$parent_MembersCountLabel" inherits="GameFontHighlightSmall" text="1/1">
+					<Anchors>
+						<Anchor point="BOTTOMRIGHT" x="-14" y="8"/>
+					</Anchors>
+				</FontString>
+				<FontString name="$parentMembersCountLabel" inherits="GameFontNormalSmall" text="GUILD_MEMBERS_ONLINE_COLON">
+					<Anchors>
+						<Anchor point="RIGHT" relativeTo="$parent_MembersCountLabel" relativePoint="LEFT" x="0" y="0"/>
+					</Anchors>
+				</FontString>
+			</Layer>
+		</Layers>
+        <Size><AbsDimension x="900" y="500" /></Size>
+        <Anchors>
+            <Anchor point="CENTER" />
+        </Anchors>
+        <Frames>
+            <Frame name="GuildUI_TableView" inherits="InsetFrameTemplate">
+                <Anchors>
+                    <Anchor point="TOPLEFT" x="2" y="-50"/>
+                    <Anchor point="BOTTOMRIGHT" x="-5" y="24"/>
+                </Anchors>
+            </Frame>
+			<Button name="$parent_LevelColumn" inherits="GuildUI_ColumnTemplate" text="LEVEL_ABBR">
+                <Size>
+                    <AbsDimension x="35" y="24"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="TOPLEFT" relativeTo="GuildUI_TableView" x="3" y="22" />
+                </Anchors>
+			</Button>
+			<Button name="$parent_ClassColumn" inherits="GuildUI_ColumnTemplate" text="CLASS_ABBR">
+                <Size>
+                    <AbsDimension x="35" y="24"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="$parent_LevelColumn" relativePoint="RIGHT" x="-1" />
+                </Anchors>
+			</Button>
+			<Button name="$parent_NameColumn" inherits="GuildUI_ColumnTemplate" text="NAME">
+                <Size>
+                    <AbsDimension x="100" y="24"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="$parent_ClassColumn" relativePoint="RIGHT" x="-2" />
+                </Anchors>
+			</Button>
+			<Button name="$parent_ZoneColumn" inherits="GuildUI_ColumnTemplate" text="ZONE">
+                <Size>
+                    <AbsDimension x="125" y="24"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="$parent_NameColumn" relativePoint="RIGHT" x="-1" />
+                </Anchors>
+			</Button>
+			<Button name="$parent_LastOnlineColumn" inherits="GuildUI_ColumnTemplate" text="LASTONLINE">
+                <Size>
+                    <AbsDimension x="76" y="24"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="$parent_ZoneColumn" relativePoint="RIGHT" x="-1" />
+                </Anchors>
+			</Button>
+			<Button name="$parent_RankColumn" inherits="GuildUI_ColumnTemplate" text="RANK">
+                <Size>
+                    <AbsDimension x="75" y="24"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="$parent_LastOnlineColumn" relativePoint="RIGHT" x="-1" />
+                </Anchors>
+			</Button>
+			<Button name="$parent_ReputationColumn" inherits="GuildUI_ColumnTemplate" text="REPUTATION">
+                <Size>
+                    <AbsDimension x="100" y="24"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="$parent_RankColumn" relativePoint="RIGHT" x="-1" />
+                </Anchors>
+			</Button>
+			<Button name="$parent_NoteColumn" inherits="GuildUI_ColumnTemplate" text="LABEL_NOTE">
+                <Size>
+                    <AbsDimension x="150" y="24"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="$parent_ReputationColumn" relativePoint="RIGHT" x="-1" />
+                </Anchors>
+			</Button>
+			<Button name="$parent_OfficerNoteColumn" inherits="GuildUI_ColumnTemplate" text="OFFICER_NOTE_COLON">
+                <Size>
+                    <AbsDimension x="150" y="24"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="$parent_NoteColumn" relativePoint="RIGHT" x="-1" />
+                </Anchors>
+			</Button>
+			<Button name="$parent_AchievementNoteColumn" inherits="GuildUI_ColumnTemplate" text="ACHIEVEMENT_POINTS">
+                <Size>
+                    <AbsDimension x="85" y="24"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="$parent_OfficerNoteColumn" relativePoint="RIGHT" x="-1" />
+                </Anchors>
+			</Button>
+			<Button name="$parent_BGRatingColumn" inherits="GuildUI_ColumnTemplate" text="BG_RATING_ABBR">
+                <Size>
+                    <AbsDimension x="51" y="24"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="$parent_AchievementNoteColumn" relativePoint="RIGHT" x="-1" />
+                </Anchors>
+			</Button>
+			<Button name="$parent_ArenaRatingColumn" inherits="GuildUI_ColumnTemplate" text="ARENA_RATING">
+                <Size>
+                    <AbsDimension x="51" y="24"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="$parent_BGRatingColumn" relativePoint="RIGHT" x="-1" />
+                </Anchors>
+			</Button>
+			<Button name="$parent_SkillsOnlineColumn" inherits="GuildUI_ColumnTemplate" text="SKILL_POINTS_ABBR">
+                <Size>
+                    <AbsDimension x="50" y="24"/>
+                </Size>
+                <Anchors>
+                    <Anchor point="LEFT" relativeTo="$parent_ArenaRatingColumn" relativePoint="RIGHT" x="-1" />
+                    <Anchor point="TOPRIGHT" relativeTo="GuildUI_TableView" x="-3" y="22" />
+                </Anchors>
+			</Button>
+			<Button parentKey="ResizeButton">
+				<Size x="32" y="16"/>
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" relativeTo="$parent" x="0" y="0"/>
+				</Anchors>
+				<Scripts>
+					<OnMouseDown>
+						self:GetParent():StartSizing("BOTTOMRIGHT");
+					</OnMouseDown>
+					<OnMouseUp>
+						self:GetParent():StopMovingOrSizing();
+					</OnMouseUp>
+				</Scripts>
+			</Button>
+        </Frames>
+        <Scripts>
+            <OnLoad>
+                self:RegisterForDrag("LeftButton");
+                GuildUI_InitFrame();
+            </OnLoad>
+            <OnDragStart>self:StartMoving();</OnDragStart>
+            <OnDragStop>self:StopMovingOrSizing();</OnDragStop>
+        </Scripts>
+    </Frame>
+
+    <Script file="Events.lua" />
+</Ui>
