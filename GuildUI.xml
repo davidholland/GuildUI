@@ -1,6 +1,5 @@
 <Ui xmlns="http://www.blizzard.com/wow/ui/">
 
-    <Script file="Definitions.lua" />
     <Script file="GuildUI.lua" />
 
     <!--Templates-->
@@ -64,7 +63,7 @@
 		</HighlightTexture>
 	</Button>
 
-    <Frame name="GuildUI_MemberRow">
+    <Frame name="GuildUI_MemberRow" virtual="true">
         <Size>
             <RelDimension x="1" />
             <AbsDimension y="22" />
@@ -78,7 +77,8 @@
 
     <!--End Templates-->
 
-    <Frame name="GuildUI_Frame" toplevel="true" movable="true" resizable="true" enableMouse="true" parent="UIParent" inherits="BasicFrameTemplate">
+    <!--Main Frame -->
+    <Frame name="GuildUI_Frame" toplevel="true" movable="true" resizable="true" enableMouse="true" parent="UIParent" inherits="BasicFrameTemplate" hidden="true">
         <Layers>
 			<Layer level="ARTWORK">
                 <FontString name="$parent_GuildName" inherits="GameFontNormal" text="Guild Name!">
@@ -98,7 +98,7 @@
 				</FontString>
 			</Layer>
 		</Layers>
-        <Size><AbsDimension x="900" y="500" /></Size>
+        <Size><AbsDimension x="1075" y="500" /></Size>
         <Anchors>
             <Anchor point="CENTER" />
         </Anchors>
@@ -238,6 +238,7 @@
             <OnDragStop>self:StopMovingOrSizing();</OnDragStop>
         </Scripts>
     </Frame>
+    <!-- End Main Frame -->
 
     <Script file="Events.lua" />
 </Ui>

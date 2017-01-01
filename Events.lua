@@ -105,6 +105,9 @@ local function GuildRosterUpdated(...)
     
     --Update UI elements
     GuildUI_UpdateMemberCount()
+    --TODO: Re-populate table data
+
+    SetSmallGuildTabardTextures("player", LibDBIcon10_GuildUI_Icon)
     
     GuildUI.Log("Guild roster was updated. (" .. updateCount .. " records)")
 end
