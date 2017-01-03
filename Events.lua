@@ -35,7 +35,7 @@ local function OnLoad(...)
     local addon = ...
     if addon ~= "GuildUI" then return end
 
-    GuildUI = GuildUI_DB or {}
+    --if GuildUI_DB then GuildUI = GuildUI_DB end
     GuildUI.Log = function (...)
         if GuildUI.LoggingEnabled then
             print("GuildUI:", ...)
@@ -52,60 +52,54 @@ end
 local function GuildRosterUpdated(...)
     local wasUpdated = ...
 
+    if not GuildUI.Players then GuildUI.Players = {} end
+
     GuildUI.PlayerCount, GuildUI.OnlineCount, GuildUI.MobileCount = GetNumGuildMembers()
     local updateCount = 0
     local updatedPlayers = {}
     for index=1,GuildUI.PlayerCount do
         local fullName, rank, rankIndex, level, class, zone, note, officerNote, isOnline, status, classFileName, achievementPoints, achievementRank, isMobile, canSoR, reputation = GetGuildRosterInfo(index)        
-        local name, server = string.match(fullName, "(%a)%-(%a)")
-        local player = {
-            Name = name,
-            Server = server,
-            FullName = fullName,
-            Rank = Rank,
-            RankIndex = rankIndex,
-            Level = level,
-            Class = class,
-            Zone = zone,
-            Note = note,
-            OfficerNote = officerNote,
-            IsOnline = isOnline,
-            Status = status,
-            ClassFileName = ClassFileName,
-            AchievementPoints = achievementPoints,
-            AchievementRank = achievementRank,
-            IsMobile = isMobile,
-            Reputation = reputation
-        }
-        updatedPlayers[player.FullName] = player
+        local name, server = string.match(fullName, "^(..-)%-(.+)$")
+
+        local player = GuildUI.Players[fullName] or {}
+        player.Name = name
+        player.Server = server
+        player.FullName = fullName
+        player.Rank = rank
+        player.RankIndex = rankIndex
+        player.Level = level
+        player.Class = class
+        player.Zone = zone
+        player.Note = note
+        player.OfficerNote = officerNote
+        player.IsOnline = isOnline
+        player.Status = status
+        player.ClassFileName = classFileName
+        player.AchievementPoints = achievementPoints
+        player.AchievementRank = achievementRank
+        player.IsMobile = isMobile
+        player.Reputation = GetText("FACTION_STANDING_LABEL"..reputation)
+        player.ReputationIndex = GetText("FACTION_STANDING_LABEL"..reputation)
+        player.LastOnline = RecentTimeDate( GetGuildRosterLastOnline(index) )
+                
+        GuildUI.Players[fullName] = player
+        updatedPlayers[player.FullName] = true
         updateCount = updateCount + 1
     end
 
     -- Check for and remove quitters
     local removedPlayers = 0
     for existingPlayerName, _ in pairs(GuildUI.Players) do
-        local isFound = false
-        for updatedPlayerName, _ in pairs(updatedPlayers) do
-            if updatedPlayerName == existingPlayerName then
-                isFound = true
-                break
-            end
-        end
-
-        if isFound == false then
+        if not updatedPlayers[existingPlayerName] then
+            GuildUI.Players[existingPlayerName].Removed = true
             removedPlayers = removedPlayers + 1
-            GuildUI.Players[existingPlayerName] = nil
         end
     end
     if removedPlayers > 0 then GuildUI.Log(removedPlayers .. " players removed.") end
-
-    -- Merge tables
-    for updatedPlayerName, updatedPlayer in pairs(updatedPlayers) do
-    end
     
     --Update UI elements
     GuildUI_UpdateMemberCount()
-    --TODO: Re-populate table data
+    GuildUI_PopulateRows()
 
     SetSmallGuildTabardTextures("player", LibDBIcon10_GuildUI_Icon)
     
