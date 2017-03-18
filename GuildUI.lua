@@ -26,6 +26,14 @@ function GuildUI_InitFrame()
     GuildUI_Frame:SetMinResize(1075, 500)
 
     GuildUI_InitColumns()
+
+    -- Init Scroll Frame
+    GuildUI_Frame_Roster_ScrollFrame.stepSize = 20
+    GuildUI_Frame_Roster_ScrollFrame.buttonHeight = 20
+
+    -- Register guild member row template in scroll frame
+	HybridScrollFrame_CreateButtons(GuildRosterContainer, "GuildUI_RowTemplate", 0, 0, "TOPLEFT", "TOPLEFT", 0, 0, "TOP", "BOTTOM");
+
     GuildUI_PopulateRows()
 end
 
@@ -80,7 +88,7 @@ function GuildUI_InitColumns()
 end
 
 function GuildUI_PopulateRows()
-    local existingRows = { GuildUI_Frame_Roster_Rows:GetChildren() } or {}
+    local existingRows = { GuildUI_Frame_Roster_ScrollFrame.ScrollChild:GetChildren() } or {}
     local existingRowCount = 0
     for _ in pairs(existingRows) do
         existingRowCount = existingRowCount + 1
@@ -94,8 +102,9 @@ function GuildUI_PopulateRows()
         local rowButton = existingRows[visiblePlayerCount] 
         if not rowButton then
             --initialize row frame and populate cell icons/fonts
-            rowButton = CreateFrame("Button", "GuildUI_Row_" .. visiblePlayerCount, GuildUI_Frame_Roster_Rows, "GuildUI_RowTemplate")
-            rowButton:SetPoint("TOP", 0, (visiblePlayerCount * rowButton:GetHeight()) * -1)
+            -- rowButton =  CreateFrame("Button", "GuildUI_Row_" .. visiblePlayerCount, GuildUI_Frame_Roster.ScrollChild, "GuildUI_RowTemplate")
+            -- rowButton:SetPoint("TOP", 0, (visiblePlayerCount * rowButton:GetHeight()) * -1)
+            rowButton = GuildUI_Frame_Roster_ScrollFrame.buttons[visiblePlayerCount + 1]
             rowButton.Player = player
             
             local padding = 0
@@ -162,5 +171,8 @@ function GuildUI_PopulateRows()
         extraRowIndex = extraRowIndex + 1
     end
 
-    -- TODO: Adjust scrollable content height based on visible rows
+    -- Adjust scrollable content height based on visible rows
+    local totalHeight = visiblePlayerCount*20
+    local displayedHeight = GuildUI_Frame_Roster_ScrollFrame:GetHeight()
+    HybridScrollFrame_Update(GuildUI_Frame_Roster_ScrollFrame, totalHeight, displayedHeight);
 end

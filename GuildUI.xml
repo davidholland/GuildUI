@@ -218,7 +218,7 @@
                 <Size x="0" y="24" />
                 <Anchors>
                     <Anchor point="TOPLEFT" y="-28" x="5" />
-                    <Anchor point="TOPRIGHT" y="-52" x="-7" />
+                    <Anchor point="TOPRIGHT" y="-52" x="-27" />
                 </Anchors>
             </Frame>
 
@@ -228,21 +228,28 @@
                     <Anchor point="BOTTOMRIGHT" x="-5" y="24"/>
                 </Anchors>
                 <Frames>
-                    <Frame name="$parent_Rows">
+                    <ScrollFrame name="$parent_ScrollFrame" inherits="HybridScrollFrameTemplate">
                         <Anchors>
-                            <Anchor point="TOPLEFT" y="-3" x="3" />
-                            <Anchor point="BOTTOMRIGHT" y="3" x="-3" />
+                            <Anchor point="TOPLEFT" />
+                            <Anchor point="BOTTOMRIGHT" />
                         </Anchors>
-                        <!--<Frames>
-                            <Button name="$parentRow1" inherits="GuildUI_RowTemplate">
-                                <Anchors>
-                                    <Anchor point="LEFT" />
-                                    <Anchor point="RIGHT" />
-                                    <Anchor point="TOP" />
-                                </Anchors>
-                            </Button>
-                        </Frames>-->
-                    </Frame>
+						<Frames>
+							<Slider name="$parentScrollBar" inherits="HybridScrollBarTemplate">
+								<Anchors>
+									<Anchor point="TOPLEFT" relativePoint="TOPRIGHT">
+										<Offset>
+											<AbsDimension x="0" y="-12"/>
+										</Offset>
+									</Anchor>
+									<Anchor point="BOTTOMLEFT" relativePoint="BOTTOMRIGHT">
+										<Offset>
+											<AbsDimension x="0" y="12"/>
+										</Offset>
+									</Anchor>
+								</Anchors>
+							</Slider>
+						</Frames>
+                    </ScrollFrame>
                 </Frames>
             </Frame>
 
